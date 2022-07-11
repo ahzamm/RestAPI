@@ -9,10 +9,22 @@ class EmployeeSerializer(serializers.Serializer):
     phone = serializers.CharField(max_length=11)
 
     def create(self, validation_data):
-        print('create method called')
-        print(validation_data)
-        print(Employee.objects.create(**validation_data))
+        """This function is for insert data in to table when POST request is called without providing id argumment
+
+        Args:
+            validation_data (dictionary): data entries for new user
+
+        Returns:
+            json: it return json form of the provided data
+        """
         return Employee.objects.create(**validation_data)
+
+
+    def update(self, employee, validation_data):
+        newEmployee = Employee(**validation_data)
+        newEmployee.id = employee.id
+        newEmployee.save()
+        return newEmployee
 
 
 class UserSerializer(serializers.Serializer):
