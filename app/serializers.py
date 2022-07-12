@@ -22,7 +22,7 @@ class EmployeeSerializer(serializers.Serializer):
 
     def update(self, employee, validation_data):
         newEmployee = Employee(**validation_data)
-        newEmployee.id = employee.id
+        newEmployee.id = employee.id     
         newEmployee.save()
         return newEmployee
 

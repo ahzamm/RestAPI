@@ -35,31 +35,25 @@ def userListView(request):
 
 @csrf_exempt
 def employeeDetailView(request, pk):
-
     try:
-        employee = Employee.objects.filter(id=pk)
-        # return HttpResponse(employee[0].email)
-
+        employee = Employee.objects.get(pk=pk)
     except Employee.DoesNotExist:
-        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
-
-    
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)      
 
     if request.method=='DELETE':
         employee.delete()
         return HttpResponse(status = status.HTTP_208_ALREADY_REPORTED)
-        ...
+     
     elif request.method=='GET':
-        # employee = Employee.objects.all()
         s = EmployeeSerializer(employee, many=True)
         return JsonResponse(s.data, safe=False)
-        ...
+   
     elif request.method=='PUT':
         parser = JSONParser().parse(request)
-        serializer = EmployeeSerializer(employee, data=parser, many=True)
+        serializer = EmployeeSerializer(employee, data=parser)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, safe=False)
         else:
             return JsonResponse(serializer.errors, safe=False)
-        ...
+ 
