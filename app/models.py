@@ -7,3 +7,4 @@ class Employee(models.Model):
     email = models.EmailField(max_length=30)
     password = models.CharField(max_length=30)
     address = models.CharField(max_length=100)
+    vxvx
